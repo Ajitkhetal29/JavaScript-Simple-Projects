@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Change Body Color</title>
+</head>
+
+<style>
+  .canvas{
+    padding: auto;
+  }
+  
+  span{
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    border: 2px solid black;
+  }
+  
+  #gray{
+    background-color: gray;
+  }
+  
+  #red{
+    background-color: red;
+  }
+  
+  #yellow{
+    background-color: yellow;
+  }
+  
+</style>
+<body>
+ 
+ <div class="canvas">
+   
+   <span id="gray" class="btn" ></span>
+   <span id="red" class="btn"></span>
+   <span id="yellow" class="btn"></span>
+
+   
+ </div>
+
+<script>
+  
+  const btns = document.querySelectorAll('.btn')
+  btns.forEach((btn) => {
+    btn.addEventListener('click',(e)=>{
+     const body = document.querySelector('body')
+     body.style.backgroundColor = e.target.id
+    })
+  })
+  
+</script>
+
+</body>
+</html>

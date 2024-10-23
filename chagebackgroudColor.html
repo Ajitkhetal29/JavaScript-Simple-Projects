@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change body Color </title>
+</head>
+
+<body>
+
+    <div class="canvas">
+
+        <button class="start"> Start </button>
+        <button class="stop"> Stop </button>
+
+    </div>
+
+    <script>
+        
+        let intervalId ;
+
+        const randomColorGenerate = ()=>{
+            const hex = '01234589ABCDEF';
+            let color = '#' ;
+            for (let i=0; i<6;i++ ){
+                color += hex[Math.floor(Math.random() * 16 )]
+
+            }
+            return color;
+        }
+
+        const startBt = function (){
+
+            if(!intervalId){
+                intervalId = setInterval(changeBgColor,1000)
+            }
+
+            function changeBgColor(){
+                 document.body.style.backgroundColor = randomColorGenerate();
+
+            }
+        };
+
+        const stopBt = function (){
+            clearInterval(intervalId)
+            intervalId = null
+        };
+        
+
+        document.querySelector('.start').addEventListener('click', startBt)
+        // document.querySelector('.start').addEventListener('click',startBt)
+        document.querySelector('.stop').addEventListener('click',stopBt)
+
+        
+
+
+    </script>
+
+</body>
+
+</html>

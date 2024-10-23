@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guess Number</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+        
+        form {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .message,
+        .previousGuess,
+        .GuesLeftDiv {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        #playAgainBtn {
+            display: none;
+            /* Hide initially */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Guess The Number Game</h1>
+
+    <div class="container">
+        <form id="guessForm">
+            <label for="guessNum">Enter a number (1-10):</label>
+            <br />
+            <input type="number" id="guessNum" min="1" max="10" required />
+            <br />
+            <button type="submit" id="subBtn">Submit</button>
+        </form>
+        <div class="message"></div>
+        <div class="previousGuess"></div>
+        <div class="GuesLeftDiv"></div>
+        <button id="playAgainBtn" onclick="playAgain()" style="display: none">
+        Play Again
+      </button>
+        <button id="quitBtn" onclick="quitGame()">Quit Game</button>
+    </div>
+
+    <script>
+        let randomNumer = parseInt(Math.random() * 10 + 1);
+        let guessNum = document.querySelector("#guessNum");
+        let subBtn = document.querySelector("#subBtn");
+        let msg = document.querySelector(".message");
+        let prevGuessMessage = document.querySelector(".previousGuess");
+        let GuesLeftDiv = document.querySelector(".GuesLeftDiv");
+        playAgainBtn.style.display = "none";
+        let quitBtn = document.querySelector("#quitBtn");
+        let previousGuess = [];
+        let GuesLeft = 10;
+        let play = true;
+
+        console.log(randomNumer);
+
+        subBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let guess = guessNum.value;
+            validateGuess(guess);
+        });
+
+        function validateGuess(guess) {
+            if (isNaN(guess) || guess < 0 || guess > 100) {
+                alert("plz enter a valid number");
+            } else {
+                displayMessage(guess);
+                previousGuess.push(guess);
+                prevGuessMessage.innerHTML = `Previous gues: ${previousGuess}`;
+                GuesLeft -= 1;
+                GuesLeftDiv.innerHTML = `Guess Left : ${GuesLeft}`;
+                guessNum.value = "";
+
+                displayMessage(guess);
+            }
+        }
+
+        function displayMessage(guess) {
+            if (guess > randomNumer) {
+                msg.innerHTML = "Guess no is high";
+            } else if (guess < randomNumer) {
+                msg.innerHTML = "guess no is small";
+            } else if (guess == randomNumer) {
+                msg.innerHTML = `great job num matched. num was ${randomNumer}`;
+                playAgainBtn.style.display = "block";
+                guessNum.setAttribute("disabled", "");
+                guessNum.value = "";
+                previousGuess = [];
+                prevGuessMessage.innerHTML = "";
+                GuesLeftDiv.innerHTML = ''
+                quitBtn.style.display = "none";
+                subBtn.style.display = 'none'
+
+            }
+            check();
+        }
+
+        function check() {
+            if (GuesLeft <= 0) {
+                msg.innerHTML = `hard Luck Game Over. the num was ${randomNumer}`;
+                guessNum.setAttribute("disabled", "");
+                playAgainBtn.style.display = "block";
+            }
+        }
+
+        function playAgain() {
+            guessNum.setAttribute("enabled", "");
+            msg.innerHTML = "";
+            guessNum.value = "";
+            previousGuess = [];
+            prevGuessMessage.innerHTML = "";
+            playAgainBtn.style.display = "none ";
+            quitBtn.style.display = "block";
+            GuesLeftDiv.innerHTML = 10;
+            subBtn.style.display = 'block'
+
+        }
+
+        function quitGame() {
+            guessNum.setAttribute("disabled", "");
+            msg.innerHTML = `the no was ${randomNumer}`;
+            guessNum.value = "";
+            previousGuess = [];
+            prevGuessMessage.innerHTML = "";
+            playAgainBtn.style.display = "block";
+            quitBtn.style.display = "none";
+            subBtn.style.display = 'block'
+
+
+        }
+    </script>
+</body>
+
+</html>
